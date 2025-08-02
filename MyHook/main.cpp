@@ -46,14 +46,16 @@ int main(int argc, char** argv)
 {
     if (argc != 3) 
     {
-        std::cout << "Usage: <MyHook.exe> <pid> <inject.dll>";
+        std::cout << "Usage: <MyHook.exe> <target.exe> <inject.dll>";
         return -1;
     }
 
-    DWORD pid = atoi(argv[1]);
-    const char* dllPath = argv[2];
+    STARTUPINFO si = { sizeof(si) };
+    PROCESS_INFORMATION pi;
+    CreateProcess(argv[1], NULL, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, NULL, &si, &pi);
 
-    if (InjectDLL(pid, dllPath))
+    const char* dllPath = argv[2];
+    if (InjectDLL(pi.dwProcessId, dllPath))
     {
         std::cout << "DLL injected successfully!\n";
     }
@@ -62,5 +64,7 @@ int main(int argc, char** argv)
         std::cerr << "DLL injection failed.\n";
     }
 
+    ResumeThread(pi.hThread);
+    std::cout << "process " << argv[1] << " is running..." << std::endl;
     return 0;
 }

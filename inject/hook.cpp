@@ -19,10 +19,10 @@ NTSTATUS NTAPI HookedNtSetInformationThread(
     PVOID ThreadInformation,
     ULONG ThreadInformationLength
 ) {
-    // À¹½Ø ThreadHideFromDebugger£¨0x11£©
+    // æ‹¦æˆª ThreadHideFromDebuggerï¼ˆ0x11ï¼‰
     if (ThreadInformationClass == (THREADINFOCLASS)0x11) {
         std::cout << "Hook is running..." << std::endl;
-        return 0; // Î±×°µ÷ÓÃ³É¹¦
+        return 0; // ä¼ªè£…è°ƒç”¨æˆåŠŸ
     }
 
     return OriginalNtSetInformationThread(

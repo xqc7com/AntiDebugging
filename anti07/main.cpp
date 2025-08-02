@@ -55,7 +55,7 @@ void AntiThreadProc()
 {
     while (true)
     {
-        SetInformationThread(); //ÉèÖÃ·´µ÷ÊÔ
+        SetInformationThread(); //è®¾ç½®åè°ƒè¯•
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     }
 }
